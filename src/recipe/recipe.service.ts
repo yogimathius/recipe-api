@@ -13,8 +13,7 @@ export class RecipesService {
   ) {}
 
   async create(data: NewRecipeInput): Promise<Recipe> {
-    const recipe = this.recipeRepository.create(data);
-    return this.recipeRepository.save(recipe);
+    return await this.recipeRepository.save(data);
   }
 
   async findOneById(id: number): Promise<Recipe> {
@@ -31,6 +30,8 @@ export class RecipesService {
 
   async update(id: number, data: Partial<Recipe>): Promise<Recipe> {
     await this.recipeRepository.update(id, data);
+    console.log(this.recipeRepository.findOneBy({id}));
+    
     return this.recipeRepository.findOneBy({id});
   }
 

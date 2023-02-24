@@ -5,6 +5,7 @@ import { Recipe } from './models/recipe.model';
 import { NewRecipeInput } from './dto/new-recipe.input';
 import { UpdateRecipeInput } from './dto/update-recipe.input';
 import { RecipesArgs } from './dto/recipes.args';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
 describe('RecipeResolver', () => {
   let resolver: RecipeResolver;
@@ -12,7 +13,14 @@ describe('RecipeResolver', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [RecipeResolver, RecipesService],
+      providers: [        
+        {
+          provide: getRepositoryToken(Recipe),
+          useValue: {},
+        },
+        RecipeResolver,
+        RecipesService
+      ],
     }).compile();
 
     resolver = module.get<RecipeResolver>(RecipeResolver);
