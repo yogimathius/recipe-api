@@ -1,8 +1,25 @@
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
-import { NewRecipeInput } from './new-recipe.input';
+import { InputType, Field } from '@nestjs/graphql';
+import { IsOptional, Length, MaxLength } from 'class-validator';
 
 @InputType()
-export class UpdateRecipeInput extends PartialType(NewRecipeInput) {
-  @Field(() => Int)
+export class UpdateRecipeInput {
+  @Field(() => String)
   id: string;
+
+  @MaxLength(30)
+  @IsOptional()
+  title: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @Length(30, 255)
+  description?: string;
+
+  @Field(type => [String])
+  @IsOptional()
+  ingredients: string[];
+  
+  @Field(type => [String])
+  @IsOptional()
+  instructions: string[];
 }

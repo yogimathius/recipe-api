@@ -29,9 +29,8 @@ input NewRecipeInput {
 }
 
 input UpdateRecipeInput {
-  title: String
+  id: String!
   description: String
-  ingredients: [String!]
-  instructions: [String!]
-  id: Int!
+  ingredients: [String!]!
+  instructions: [String!]!
 }
