@@ -1,46 +1,41 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { NewRecipeInput } from './dto/new-recipe.input';
 import { RecipesArgs } from './dto/recipes.args';
-import { UpdateRecipeInput } from './dto/update-recipe.input';
 import { Recipe } from './models/recipe.model';
 
 @Injectable()
 export class RecipesService {
-  private readonly recipes: Recipe[] = [];
+  constructor(
+    @InjectRepository(Recipe)
+    private recipeRepository: Repository<Recipe>,
+  ) {}
 
-  async create(newRecipeData: NewRecipeInput): Promise<Recipe> {
-    const recipe = {
-      id: (this.recipes.length + 1).toString(),
-      ...newRecipeData,
-    };
-    this.recipes.push(recipe);
-    return recipe;
+  async create(data: NewRecipeInput): Promise<Recipe> {
+    const recipe = this.recipeRepository.create(data);
+    return this.recipeRepository.save(recipe);
   }
 
-  async findOneById(id: string): Promise<Recipe> {
-    return this.recipes.find(recipe => recipe.id === id);
+  async findOneById(id: number): Promise<Recipe> {
+    return this.recipeRepository.findOneBy({id});
   }
 
   async findAll(recipesArgs: RecipesArgs): Promise<Recipe[]> {
     const { page, limit } = recipesArgs;
-    return this.recipes.slice((page - 1) * limit, page * limit);
+    return this.recipeRepository.find({
+      take: limit,
+      skip: (page - 1) * limit,
+    });
   }
 
-  async remove(id: string): Promise<boolean> {
-    const recipeIndex = this.recipes.findIndex(recipe => recipe.id === id);
-    if (recipeIndex >= 0) {
-      this.recipes.splice(recipeIndex, 1);
-      return true;
-    }
-    return false;
+  async update(id: number, data: Partial<Recipe>): Promise<Recipe> {
+    await this.recipeRepository.update(id, data);
+    return this.recipeRepository.findOneBy({id});
   }
 
-  async update(id: string, updateRecipeData: UpdateRecipeInput): Promise<Recipe> {
-    const recipe = this.recipes.find(recipe => recipe.id === id);
-    if (!recipe) {
-      throw new Error(`Recipe with ID ${id} not found`);
-    }
-    Object.assign(recipe, updateRecipeData);
-    return recipe;
+  async remove(id: number): Promise<boolean> {
+    const result = await this.recipeRepository.delete(id);
+    return result.affected > 0;
   }
 }

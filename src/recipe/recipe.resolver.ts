@@ -10,7 +10,7 @@ export class RecipeResolver {
   constructor(private readonly recipesService: RecipesService) {}
 
   @Query(() => Recipe)
-  async recipe(@Args('id') id: string): Promise<Recipe> {
+  async recipe(@Args('id') id: number): Promise<Recipe> {
     return this.recipesService.findOneById(id);
   }
 
@@ -28,14 +28,14 @@ export class RecipeResolver {
 
   @Mutation(() => Recipe)
   async updateRecipe(
-    @Args({ name: 'id', type: () => String }) id: string,
+    @Args({ name: 'id', type: () => Number }) id: number,
     @Args('updateRecipeInput') updateRecipeInput: UpdateRecipeInput,
   ): Promise<Recipe> {
     return this.recipesService.update(id, updateRecipeInput);
   }
 
   @Mutation(() => Boolean)
-  async deleteRecipe(@Args('id') id: string): Promise<boolean> {
+  async deleteRecipe(@Args('id') id: number): Promise<boolean> {
     return this.recipesService.remove(id);
   }
 }

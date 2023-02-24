@@ -22,7 +22,7 @@ describe('RecipeResolver', () => {
   describe('recipe', () => {
     it('should return a recipe by id', async () => {
       const expectedRecipe: Recipe = {
-        id: '1',
+        id: 1,
         title: 'New Recipe',
         description: 'A new recipe',
         ingredients: ['ingredient1', 'ingredient2'],
@@ -30,9 +30,9 @@ describe('RecipeResolver', () => {
       };
       jest.spyOn(service, 'findOneById').mockResolvedValue(expectedRecipe);
 
-      const result = await resolver.recipe('1');
+      const result = await resolver.recipe(1);
 
-      expect(service.findOneById).toHaveBeenCalledWith('1');
+      expect(service.findOneById).toHaveBeenCalledWith(1);
       expect(result).toEqual(expectedRecipe);
     });
   });
@@ -41,21 +41,21 @@ describe('RecipeResolver', () => {
     it('should return a list of recipes', async () => {
       const expectedRecipes: Recipe[] = [
         {
-          id: '1',
+          id: 1,
           title: 'New Recipe',
           description: 'A new recipe',
           ingredients: ['ingredient1', 'ingredient2'],
           instructions: ['step1', 'step2'],
         },
         {
-          id: '2',
+          id: 2,
           title: 'New Recipe',
           description: 'A new recipe',
           ingredients: ['ingredient1', 'ingredient2'],
           instructions: ['step1', 'step2'],
         },
         {
-          id: '3',
+          id: 3,
           title: 'New Recipe',
           description: 'A new recipe',
           ingredients: ['ingredient1', 'ingredient2'],
@@ -80,7 +80,7 @@ describe('RecipeResolver', () => {
         ingredients: ['ingredient1', 'ingredient2'],
         instructions: ['step1', 'step2'],
       };
-      const expectedRecipe: Recipe = { id: '1', ...newRecipeData };
+      const expectedRecipe: Recipe = { id: 1, ...newRecipeData };
       jest.spyOn(service, 'create').mockResolvedValue(expectedRecipe);
 
       const result = await resolver.createRecipe(newRecipeData);
@@ -92,7 +92,7 @@ describe('RecipeResolver', () => {
 
   describe('updateRecipe', () => {
     it('should update an existing recipe', async () => {
-      const recipeId = 'recipe-id';
+      const recipeId = 1;
       const updateRecipeInput: UpdateRecipeInput = {
         id: recipeId,
         title: 'Updated Recipe',
