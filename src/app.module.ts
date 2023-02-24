@@ -5,13 +5,11 @@ import { RecipeResolver } from './recipe/recipe.resolver';
 import { RecipeModule } from './recipe/recipe.module';
 
 @Module({
-  controllers: [],
-  providers: [RecipeResolver],
   imports: [
+    RecipeModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
     }),
-    // RecipeModule,
   ],})
 export class AppModule {}

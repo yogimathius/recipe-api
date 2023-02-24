@@ -1,13 +1,8 @@
 import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
 import { RecipeResolver } from './recipe.resolver';
+import { RecipesService } from './recipe.service';
 
 @Module({
-  imports: [
-    GraphQLModule.forRoot({
-      autoSchemaFile: true,
-    }),
-  ],
-  providers: [RecipeResolver],
+  providers: [RecipesService, RecipeResolver],
 })
 export class RecipeModule {}
