@@ -916,7 +916,7 @@
 
 "@nestjs/config@^2.3.1":
   version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/config/-/config-2.3.1.tgz#6ac151f818db4ccf987c7ff8ef5b2c1f4eeec913"
+  resolved "https://registry.npmjs.org/@nestjs/config/-/config-2.3.1.tgz"
   integrity sha512-Ckzel0NZ9CWhNsLfE1hxfDuxJuEbhQvGxSlmZ1/X8awjRmAA/g3kT6M1+MO1SHj1wMtPyUfd9WpwkiqFbiwQgA==
   dependencies:
     dotenv "16.0.3"
@@ -2481,7 +2481,7 @@ doctrine@^3.0.0:
 
 dotenv-expand@10.0.0:
   version "10.0.0"
-  resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-10.0.0.tgz#12605d00fb0af6d0a592e6558585784032e4ef37"
+  resolved "https://registry.npmjs.org/dotenv-expand/-/dotenv-expand-10.0.0.tgz"
   integrity sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==
 
 dotenv@16.0.3, dotenv@^16.0.3:
@@ -3132,7 +3132,7 @@ graphql-tag@2.12.6, graphql-tag@^2.11.0, graphql-tag@^2.12.6:
 
 graphql-tools@^8.3.18:
   version "8.3.18"
-  resolved "https://registry.npmjs.org/graphql-tools/-/graphql-tools-8.3.18.tgz"
+  resolved "https://registry.yarnpkg.com/graphql-tools/-/graphql-tools-8.3.18.tgz#259ee5efb668edd8ae768762e5997cf0b6ee0e48"
   integrity sha512-UnTpONDidlMNZqNi1wGBVSpGCcpKtlW0K46aWhNJCC4gTFics0r2hz1nA+Rpn04jaQy8L71Fo2II2fkKeuyuNQ==
   dependencies:
     "@graphql-tools/schema" "9.0.16"
@@ -5304,7 +5304,7 @@ typedarray@^0.0.6:
 
 typeorm@^0.3.12:
   version "0.3.12"
-  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.3.12.tgz#d0fcdc4ce0c32bca42ba5ab04e83f5f58c41ebf3"
+  resolved "https://registry.npmjs.org/typeorm/-/typeorm-0.3.12.tgz"
   integrity sha512-sYSxBmCf1nJLLTcYtwqZ+lQIRtLPyUoO93rHTOKk9vJCyT4UfRtU7oRsJvfvKP3nnZTD1hzz2SEy2zwPEN6OyA==
   dependencies:
     "@sqltools/formatter" "^1.2.5"
