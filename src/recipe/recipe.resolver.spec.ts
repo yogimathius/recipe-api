@@ -141,10 +141,11 @@ describe('RecipeResolver', () => {
         ingredients: ['Ingredient 1', 'Ingredient 2'],
         instructions: ['Step 1', 'Step 2'],
       };
-      jest.spyOn(repository, 'save').mockResolvedValue({...newRecipe, id: 1});
+      jest.spyOn(repository, 'save').mockResolvedValue({id: 1, ...newRecipe});
 
       const recipe = await service.create(newRecipe);
-      
+      jest.spyOn(repository, 'findOneBy').mockResolvedValueOnce(recipe);
+
       const mockDeleteResult = { affected: 1, raw: null };
       jest.spyOn(repository, 'delete').mockResolvedValue(mockDeleteResult);
       // Call the deleteRecipe mutation

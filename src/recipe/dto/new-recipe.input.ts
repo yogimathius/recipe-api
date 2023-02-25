@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsOptional, Length, MaxLength } from 'class-validator';
+import { ArrayNotEmpty, IsNotEmpty, IsOptional, Length, MaxLength } from 'class-validator';
 
 @InputType()
 export class NewRecipeInput {
@@ -12,9 +12,11 @@ export class NewRecipeInput {
   @Length(30, 255)
   description?: string;
 
-  @Field(type => [String])
+  @Field(() => [String])
+  @ArrayNotEmpty()
   ingredients: string[];
   
-  @Field(type => [String])
+  @Field(() => [String])
+  @ArrayNotEmpty()
   instructions: string[];
 }

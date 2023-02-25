@@ -40,7 +40,6 @@ export class RecipesService {
       return false;
     }
     const result = await this.recipeRepository.delete(id);
-    console.log('result: ', result, recipeFound);
     
     return result.affected > 0;
   }
