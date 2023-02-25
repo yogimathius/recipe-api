@@ -30,13 +30,18 @@ export class RecipesService {
 
   async update(id: number, data: Partial<Recipe>): Promise<Recipe> {
     await this.recipeRepository.update(id, data);
-    console.log(this.recipeRepository.findOneBy({id}));
     
     return this.recipeRepository.findOneBy({id});
   }
 
   async remove(id: number): Promise<boolean> {
+    const recipeFound = await this.recipeRepository.findOneBy({id})
+    if (!recipeFound) {
+      return false;
+    }
     const result = await this.recipeRepository.delete(id);
+    console.log('result: ', result, recipeFound);
+    
     return result.affected > 0;
   }
 }

@@ -81,7 +81,7 @@ describe('RecipesService', () => {
     it('should update a recipe by id', async () => {
       const updatedRecipe = { title: 'Updated Recipe', description: 'Updated Description', instructions: ['step 1'], ingredients: ['food 1'] };
       const expectedRecipe = { id: 1, ...updatedRecipe };
-      jest.spyOn(repository, 'findOne').mockResolvedValue(expectedRecipe);
+      jest.spyOn(repository, 'findOneBy').mockResolvedValue(expectedRecipe);
       jest.spyOn(repository, 'update').mockResolvedValue({ affected: 1, generatedMaps: [updatedRecipe], raw: null });
 
       const result = await service.update(1, updatedRecipe);
@@ -95,6 +95,8 @@ describe('RecipesService', () => {
   describe('remove', () => {
     it('should delete a recipe', async () => {
       const mockRecipe = { id: 1, title: 'Recipe 1', description: 'test', instructions: ['step 1'], ingredients: ['food 1'] };
+      jest.spyOn(repository, 'findOneBy').mockResolvedValue(mockRecipe);
+
       const mockDeleteResult = { affected: 1, raw: null };
       jest.spyOn(repository, 'delete').mockResolvedValue(mockDeleteResult);
   
@@ -104,7 +106,7 @@ describe('RecipesService', () => {
     });
   
     it('should return false if recipe is not found', async () => {
-      jest.spyOn(repository, 'findOneBy').mockResolvedValue(undefined);
+      jest.spyOn(repository, 'findOneBy').mockResolvedValue(null);
   
       const result = await service.remove(1);
       expect(result).toEqual(false);

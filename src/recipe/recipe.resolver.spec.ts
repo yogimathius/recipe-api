@@ -6,17 +6,29 @@ import { NewRecipeInput } from './dto/new-recipe.input';
 import { UpdateRecipeInput } from './dto/update-recipe.input';
 import { RecipesArgs } from './dto/recipes.args';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+const mockRepository = () => ({
+  create: jest.fn(),
+  save: jest.fn(),
+  find: jest.fn(),
+  findOne: jest.fn(),
+  update: jest.fn(),
+  delete: jest.fn(),
+  findOneBy: jest.fn(),
+});
 
 describe('RecipeResolver', () => {
   let resolver: RecipeResolver;
   let service: RecipesService;
+  let repository: Repository<Recipe>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [        
         {
           provide: getRepositoryToken(Recipe),
-          useValue: {},
+          useValue: mockRepository(),
         },
         RecipeResolver,
         RecipesService
@@ -25,6 +37,8 @@ describe('RecipeResolver', () => {
 
     resolver = module.get<RecipeResolver>(RecipeResolver);
     service = module.get<RecipesService>(RecipesService);
+    repository = module.get<Repository<Recipe>>(getRepositoryToken(Recipe));
+
   });
 
   describe('recipe', () => {
@@ -127,8 +141,12 @@ describe('RecipeResolver', () => {
         ingredients: ['Ingredient 1', 'Ingredient 2'],
         instructions: ['Step 1', 'Step 2'],
       };
+      jest.spyOn(repository, 'save').mockResolvedValue({...newRecipe, id: 1});
+
       const recipe = await service.create(newRecipe);
-  
+      
+      const mockDeleteResult = { affected: 1, raw: null };
+      jest.spyOn(repository, 'delete').mockResolvedValue(mockDeleteResult);
       // Call the deleteRecipe mutation
       const deleted = await resolver.deleteRecipe(recipe.id);
   
