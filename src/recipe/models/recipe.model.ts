@@ -12,8 +12,8 @@ export class Recipe {
   description?: string;
 
   @Field(type => [String])
-  ingredients: string[];
+  ingredients: string[] = [];
 
   @Field(type => [String])
-  instructions: string[];
+  instructions: string[] = [];
 }
