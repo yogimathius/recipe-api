@@ -1,4 +1,6 @@
 import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
+import { ManyToMany } from 'typeorm';
+import { Ingredient } from './ingredient.model';
 
 @ObjectType({ description: 'recipe ' })
 export class Recipe {
@@ -11,8 +13,9 @@ export class Recipe {
   @Field({ nullable: true })
   description?: string;
 
-  @Field(type => [String])
-  ingredients: string[] = [];
+  @ManyToMany(() => Ingredient, ingredient => ingredient.recipes)
+  @Field(() => [Ingredient])
+  ingredients: Ingredient[];
 
   @Field(type => [String])
   instructions: string[] = [];
