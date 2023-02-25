@@ -8,9 +8,11 @@ import { DatabaseModule } from './database/database.module';
 @Module({
   imports: [
     RecipeModule,
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: 'schema.gql',
+      useFactory: async () => ({
+        autoSchemaFile: 'schema.gql',
+      }),    
     }),
     DatabaseModule,
   ],})
