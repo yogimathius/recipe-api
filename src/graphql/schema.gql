@@ -3,7 +3,7 @@ type Recipe {
   title: String!
   description: String
   ingredients: [Ingredient!]!
-  instructions: [String!]!
+  instructions: [Instructions!]!
 }
 
 type Ingredient {
@@ -14,13 +14,19 @@ type Ingredient {
   recipe: Recipe!
 }
 
+type Instruction {
+  id: ID!
+  step: Int!
+  direction: String!
+}
+
 type Query {
   recipe(id: ID!): Recipe!
   recipes: [Recipe!]!
 }
 
 type Mutation {
-  createRecipe(name: String!, description: String!, ingredients: [String!]!, instructions: [String!]!): Recipe!
-  updateRecipe(id: ID!, name: String!, description: String!, ingredients: [String!]!, instructions: [String!]!): Recipe!
+  createRecipe(name: String!, description: String!, ingredients: [Ingredient!]!, instructions: [Instruction!]!): Recipe!
+  updateRecipe(id: ID!, name: String!, description: String!, ingredients: [Ingredient!]!, instructions: [Instruction!]!): Recipe!
   deleteRecipe(id: ID!): ID!
 }

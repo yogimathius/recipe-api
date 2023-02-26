@@ -2,6 +2,7 @@ import { InputType, Field } from '@nestjs/graphql';
 import { IsOptional, Length, MaxLength } from 'class-validator';
 import { OneToMany } from 'typeorm';
 import { Ingredient } from '../entities/ingredient.entity';
+import { Instruction } from '../entities/instruction.entity';
 
 @InputType()
 export class UpdateRecipeInput {
@@ -20,8 +21,9 @@ export class UpdateRecipeInput {
   @OneToMany(() => Ingredient, ingredient => ingredient, { cascade: true })
   @Field(() => [Ingredient])
   ingredients: Ingredient[];
-  
-  @Field(type => [String])
+
+  @OneToMany(() => Instruction, ingredient => ingredient, { cascade: true })
+  @Field(type => [Instruction])
   @IsOptional()
-  instructions: string[];
+  instructions: Instruction[];
 }

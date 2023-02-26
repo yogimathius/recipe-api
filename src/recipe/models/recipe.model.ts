@@ -1,6 +1,7 @@
 import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
-import { ManyToMany } from 'typeorm';
+import { ManyToMany, OneToMany } from 'typeorm';
 import { Ingredient } from './ingredient.model';
+import { Instruction } from './instruction.model';
 
 @ObjectType({ description: 'recipe ' })
 export class Recipe {
@@ -13,10 +14,11 @@ export class Recipe {
   @Field({ nullable: true })
   description?: string;
 
-  @ManyToMany(() => Ingredient, ingredient => ingredient)
+  @OneToMany(() => Ingredient, ingredient => ingredient.recipe)
   @Field(() => [Ingredient])
   ingredients: Ingredient[] = [];
 
-  @Field(type => [String])
-  instructions: string[] = [];
+  @OneToMany(() => Instruction, instruction => instruction.recipe)
+  @Field(() => [Instruction])
+  instructions: Instruction[] = [];
 }

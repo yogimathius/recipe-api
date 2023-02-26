@@ -1,4 +1,5 @@
 import { Ingredient } from './ingredient.entity';
+import { Instruction } from './instruction.entity';
 import { Recipe } from './recipe.entity';
 
 const ingredient1 = new Ingredient();
@@ -8,10 +9,21 @@ ingredient1.quantity = 2;
 ingredient1.type = "fruit";
 
 const ingredient2 = new Ingredient();
-ingredient1.id = 2;
-ingredient1.name = 'Ingredient 1';
-ingredient1.quantity = 2;
-ingredient1.type = "fruit";
+ingredient2.id = 2;
+ingredient2.name = 'Ingredient 1';
+ingredient2.quantity = 2;
+ingredient2.type = "fruit";
+
+
+const instruction1 = new Instruction();
+instruction1.id = 1;
+instruction1.step = 1;
+instruction1.direction = 'directon 1';
+
+const instruction2 = new Instruction();
+instruction2.id = 2;
+instruction2.step = 2;
+instruction2.direction = 'directon 2';
 
 describe('Recipe Entity', () => {
   it('should create a recipe instance', () => {
@@ -50,7 +62,7 @@ describe('Recipe Entity', () => {
   it('should have instructions', () => {
     const recipe = new Recipe();
     expect(recipe.instructions).toBeUndefined();
-    recipe.instructions = ['Step 1', 'Step 2'];
-    expect(recipe.instructions).toEqual(['Step 1', 'Step 2']);
+    recipe.instructions = [instruction1, instruction2];
+    expect(recipe.instructions).toEqual([instruction1, instruction2]);
   });
 });
