@@ -4,7 +4,7 @@ import { Recipe } from './recipe.entity';
 @Entity()
 export class Ingredient {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number = Math.random();
 
   @Column()
   name: string;
