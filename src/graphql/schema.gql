@@ -1,9 +1,17 @@
 type Recipe {
   id: ID!
-  name: String!
-  description: String!
-  ingredients: [String!]!
+  title: String!
+  description: String
+  ingredients: [Ingredient!]!
   instructions: [String!]!
+}
+
+type Ingredient {
+  id: ID!
+  name: String!
+  type: String!
+  quantity: Int!
+  recipe: Recipe!
 }
 
 type Query {

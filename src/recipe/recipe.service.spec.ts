@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RecipesService } from './recipe.service';
 import { Recipe } from './models/recipe.model';
+import { Ingredient } from './models/ingredient.model';
 
 const mockRepository = () => ({
   create: jest.fn(),
@@ -13,6 +14,11 @@ const mockRepository = () => ({
   delete: jest.fn(),
   findOneBy: jest.fn(),
 });
+const ingredient1 = new Ingredient();
+ingredient1.id = 1;
+ingredient1.name = 'Ingredient 1';
+ingredient1.quantity = 2;
+ingredient1.type = "fruit";
 
 describe('RecipesService', () => {
   let service: RecipesService;
@@ -35,7 +41,7 @@ describe('RecipesService', () => {
 
   describe('create', () => {
     it('should create and save a new recipe', async () => {
-      const newRecipe = { title: 'Recipe 1', description: 'Description 1', instructions: ['step 1'], ingredients: ['food 1'] };
+      const newRecipe = { title: 'Recipe 1', description: 'Description 1', instructions: ['step 1'], ingredients: [ingredient1] };
       const expectedRecipe = { id: 1, ...newRecipe };
        jest.spyOn(repository, 'save').mockResolvedValue(expectedRecipe);
 
@@ -48,7 +54,7 @@ describe('RecipesService', () => {
 
   describe('findOneById', () => {
     it('should find a recipe by id', async () => {
-        const expectedRecipe = { id: 1, title: 'Recipe 1', description: 'Description 1', instructions: ['step 1'], ingredients: ['food 1'] };
+        const expectedRecipe = { id: 1, title: 'Recipe 1', description: 'Description 1', instructions: ['step 1'], ingredients: [ingredient1] };
         jest.spyOn(repository, 'findOneBy').mockResolvedValue(expectedRecipe);
 
       const result = await service.findOneById(1);
@@ -61,9 +67,9 @@ describe('RecipesService', () => {
   describe('findAll', () => {
     it('should find all recipes with pagination', async () => {
       const recipes = [
-        { id: 1, title: 'Recipe 1', description: 'Description 1', instructions: ['step 1'], ingredients: ['food 1'] },
-        { id: 2, title: 'Recipe 2', description: 'Description 2', instructions: ['step 1'], ingredients: ['food 1'] },
-        { id: 3, title: 'Recipe 3', description: 'Description 3', instructions: ['step 1'], ingredients: ['food 1'] },
+        { id: 1, title: 'Recipe 1', description: 'Description 1', instructions: ['step 1'], ingredients: [ingredient1] },
+        { id: 2, title: 'Recipe 2', description: 'Description 2', instructions: ['step 1'], ingredients: [ingredient1] },
+        { id: 3, title: 'Recipe 3', description: 'Description 3', instructions: ['step 1'], ingredients: [ingredient1] },
       ];
       jest.spyOn(repository, 'find').mockResolvedValue(recipes);
 
@@ -79,7 +85,7 @@ describe('RecipesService', () => {
 
   describe('update', () => {
     it('should update a recipe by id', async () => {
-      const updatedRecipe = { title: 'Updated Recipe', description: 'Updated Description', instructions: ['step 1'], ingredients: ['food 1'] };
+      const updatedRecipe = { title: 'Updated Recipe', description: 'Updated Description', instructions: ['step 1'], ingredients: [ingredient1] };
       const expectedRecipe = { id: 1, ...updatedRecipe };
       jest.spyOn(repository, 'findOneBy').mockResolvedValue(expectedRecipe);
       jest.spyOn(repository, 'update').mockResolvedValue({ affected: 1, generatedMaps: [updatedRecipe], raw: null });
@@ -94,7 +100,7 @@ describe('RecipesService', () => {
 
   describe('remove', () => {
     it('should delete a recipe', async () => {
-      const mockRecipe = { id: 1, title: 'Recipe 1', description: 'test', instructions: ['step 1'], ingredients: ['food 1'] };
+      const mockRecipe = { id: 1, title: 'Recipe 1', description: 'test', instructions: ['step 1'], ingredients: [ingredient1] };
       jest.spyOn(repository, 'findOneBy').mockResolvedValue(mockRecipe);
 
       const mockDeleteResult = { affected: 1, raw: null };

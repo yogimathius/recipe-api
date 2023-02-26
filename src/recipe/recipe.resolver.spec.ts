@@ -7,6 +7,7 @@ import { UpdateRecipeInput } from './dto/update-recipe.input';
 import { RecipesArgs } from './dto/recipes.args';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Ingredient } from './entities/ingredient.entity';
 
 const mockRepository = () => ({
   create: jest.fn(),
@@ -40,14 +41,25 @@ describe('RecipeResolver', () => {
     repository = module.get<Repository<Recipe>>(getRepositoryToken(Recipe));
 
   });
-
+  const ingredient1 = new Ingredient();
+  ingredient1.id = 1;
+  ingredient1.name = 'Ingredient 1';
+  ingredient1.quantity = 2;
+  ingredient1.type = "fruit";
+  
+  const ingredient2 = new Ingredient();
+  ingredient1.id = 2;
+  ingredient1.name = 'Ingredient 1';
+  ingredient1.quantity = 2;
+  ingredient1.type = "fruit";
+  
   describe('recipe', () => {
     it('should return a recipe by id', async () => {
       const expectedRecipe: Recipe = {
         id: 1,
         title: 'New Recipe',
         description: 'A new recipe',
-        ingredients: ['ingredient1', 'ingredient2'],
+        ingredients: [ingredient1, ingredient2],
         instructions: ['step1', 'step2'],
       };
       jest.spyOn(service, 'findOneById').mockResolvedValue(expectedRecipe);
@@ -66,21 +78,21 @@ describe('RecipeResolver', () => {
           id: 1,
           title: 'New Recipe',
           description: 'A new recipe',
-          ingredients: ['ingredient1', 'ingredient2'],
+          ingredients: [ingredient1, ingredient2],
           instructions: ['step1', 'step2'],
         },
         {
           id: 2,
           title: 'New Recipe',
           description: 'A new recipe',
-          ingredients: ['ingredient1', 'ingredient2'],
+        ingredients: [ingredient1, ingredient2],
           instructions: ['step1', 'step2'],
         },
         {
           id: 3,
           title: 'New Recipe',
           description: 'A new recipe',
-          ingredients: ['ingredient1', 'ingredient2'],
+        ingredients: [ingredient1, ingredient2],
           instructions: ['step1', 'step2'],
         },
       ];
@@ -99,7 +111,7 @@ describe('RecipeResolver', () => {
       const newRecipeData: NewRecipeInput = {
         title: 'New Recipe',
         description: 'A new recipe',
-        ingredients: ['ingredient1', 'ingredient2'],
+        ingredients: [ingredient1, ingredient2],
         instructions: ['step1', 'step2'],
       };
       const expectedRecipe: Recipe = { id: 1, ...newRecipeData };
@@ -119,7 +131,7 @@ describe('RecipeResolver', () => {
         id: recipeId,
         title: 'Updated Recipe',
         description: 'An updated recipe',
-        ingredients: ['ingredient1', 'ingredient2'],
+        ingredients: [ingredient1, ingredient2],
         instructions: ['step1', 'step2'],
       };
       const expectedRecipe: Recipe = { id: recipeId, ...updateRecipeInput };
@@ -138,7 +150,7 @@ describe('RecipeResolver', () => {
       const newRecipe: NewRecipeInput = {
         title: 'Test Recipe',
         description: 'This is a test recipe',
-        ingredients: ['Ingredient 1', 'Ingredient 2'],
+        ingredients: [ingredient1, ingredient2],
         instructions: ['Step 1', 'Step 2'],
       };
       jest.spyOn(repository, 'save').mockResolvedValue({id: 1, ...newRecipe});

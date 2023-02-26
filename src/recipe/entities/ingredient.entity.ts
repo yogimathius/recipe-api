@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Recipe } from './recipe.entity';
 
 @Entity()
 export class Ingredient {
@@ -13,4 +14,7 @@ export class Ingredient {
 
   @Column()
   quantity: number;
+
+  @ManyToOne(() => Recipe, recipe => recipe.ingredients)
+  recipe: Recipe;
 }

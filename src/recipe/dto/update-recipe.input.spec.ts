@@ -1,5 +1,18 @@
 import { validate, ValidationError } from 'class-validator';
+import { Ingredient } from '../entities/ingredient.entity';
 import { UpdateRecipeInput } from './update-recipe.input';
+
+const ingredient1 = new Ingredient();
+ingredient1.id = 1;
+ingredient1.name = 'Ingredient 1';
+ingredient1.quantity = 2;
+ingredient1.type = "fruit";
+
+const ingredient2 = new Ingredient();
+ingredient1.id = 2;
+ingredient1.name = 'Ingredient 1';
+ingredient1.quantity = 2;
+ingredient1.type = "fruit";
 
 describe('UpdateRecipeInput', () => {
   it('should be valid with all fields', async () => {
@@ -7,7 +20,7 @@ describe('UpdateRecipeInput', () => {
     input.id = 1;
     input.title = 'Test Recipe';
     input.description = 'This is a test recipe with a description longer thatn 50 characters';
-    input.ingredients = ['Ingredient 1', 'Ingredient 2'];
+    input.ingredients = [ingredient1, ingredient2];
     input.instructions = ['Step 1', 'Step 2'];
     
     const errors = await validate(input);
@@ -72,7 +85,7 @@ describe('UpdateRecipeInput', () => {
   describe('ingredients', () => {
     it('should not throw an error when ingredients are valid', async () => {
       const input = new UpdateRecipeInput();
-      input.ingredients = ['Ingredient 1', 'Ingredient 2'];
+      input.ingredients = [ingredient1, ingredient2];
       const errors = await validate(input);
       expect(errors.length).toBe(0);
     });

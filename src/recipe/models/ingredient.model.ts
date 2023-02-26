@@ -1,5 +1,5 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Recipe } from './recipe.model';
 
 @Entity()
@@ -13,6 +13,14 @@ export class Ingredient {
   @Field()
   name: string;
 
-  @ManyToMany(() => Recipe, recipe => recipe.ingredients)
-  recipes: Recipe[];
+  @Column()
+  @Field()
+  type: string;
+
+  @Column()
+  @Field()
+  quantity: number;
+
+  @ManyToOne(() => Recipe, (recipe) => recipe.ingredients)
+  recipe: Recipe;
 }

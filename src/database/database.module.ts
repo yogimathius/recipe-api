@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Recipe } from '../recipe/entities/recipe.entity';
+import { Ingredient } from '../recipe/entities/ingredient.entity';
+
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
@@ -15,6 +17,7 @@ import { Recipe } from '../recipe/entities/recipe.entity';
             database: 'recipe_api',
             autoLoadEntities: true,
             synchronize: true,
+            entities: [Recipe, Ingredient],
         }),
         inject: [ConfigService],
     }),

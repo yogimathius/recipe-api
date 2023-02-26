@@ -13,9 +13,9 @@ export class Recipe {
   @Field({ nullable: true })
   description?: string;
 
-  @ManyToMany(() => Ingredient, ingredient => ingredient.recipes)
+  @ManyToMany(() => Ingredient, ingredient => ingredient)
   @Field(() => [Ingredient])
-  ingredients: Ingredient[];
+  ingredients: Ingredient[] = [];
 
   @Field(type => [String])
   instructions: string[] = [];

@@ -1,4 +1,17 @@
+import { Ingredient } from './ingredient.entity';
 import { Recipe } from './recipe.entity';
+
+const ingredient1 = new Ingredient();
+ingredient1.id = 1;
+ingredient1.name = 'Ingredient 1';
+ingredient1.quantity = 2;
+ingredient1.type = "fruit";
+
+const ingredient2 = new Ingredient();
+ingredient1.id = 2;
+ingredient1.name = 'Ingredient 1';
+ingredient1.quantity = 2;
+ingredient1.type = "fruit";
 
 describe('Recipe Entity', () => {
   it('should create a recipe instance', () => {
@@ -30,8 +43,8 @@ describe('Recipe Entity', () => {
   it('should have ingredients', () => {
     const recipe = new Recipe();
     expect(recipe.ingredients).toBeUndefined();
-    recipe.ingredients = ['Ingredient 1', 'Ingredient 2'];
-    expect(recipe.ingredients).toEqual(['Ingredient 1', 'Ingredient 2']);
+    recipe.ingredients = [ingredient1, ingredient2],
+    expect(recipe.ingredients).toEqual([ingredient1, ingredient2]);
   });
 
   it('should have instructions', () => {
