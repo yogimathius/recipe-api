@@ -9,6 +9,7 @@ export class Recipe {
   id: number;
 
   @Directive('@upper')
+  @Field({ nullable: true })
   title: string;
 
   @Field({ nullable: true })
