@@ -4,12 +4,13 @@ import { Repository } from 'typeorm';
 import { NewRecipeInput } from './dto/new-recipe.input';
 import { RecipesArgs } from './dto/recipes.args';
 import { Recipe } from './models/recipe.model';
+import { RecipeRepository } from './repositories/recipe.repository';
 
 @Injectable()
 export class RecipesService {
   constructor(
     @InjectRepository(Recipe)
-    private recipeRepository: Repository<Recipe>,
+    private recipeRepository: RecipeRepository,
   ) {}
 
   async create(data: NewRecipeInput): Promise<Recipe> {

@@ -1,37 +1,19 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { EntityManager, Repository } from 'typeorm';
+import { Ingredient } from '../entities/ingredient.entity';
+import { Instruction } from '../entities/instruction.entity';
 import { Recipe } from '../entities/recipe.entity';
+import { IngredientRepository } from './ingredient.repository';
+import { InstructionRepository } from './instruction.repository';
 
-@EntityRepository(Recipe)
+@Injectable()
 export class RecipeRepository extends Repository<Recipe> {
-
-  async createRecipe(recipeData: Partial<Recipe>): Promise<Recipe> {
-    const recipe = this.create(recipeData);
-    await this.save(recipe);
-    return recipe;
-  }
-
-  async updateRecipe(recipeId: number, recipeData: Partial<Recipe>): Promise<Recipe> {
-    const recipe = await this.findOne({where: {id: recipeId}});
-    if (!recipe) {
-      return null;
-    }
-    Object.assign(recipe, recipeData);
-    await this.save(recipe);
-    return recipe;
-  }
-
-  async deleteRecipe(recipeId: number): Promise<boolean> {
-    const result = await this.delete(recipeId);
-    return result.affected > 0;
-  }
-
-  async getRecipeById(recipeId: number): Promise<Recipe> {
-    const recipe = await this.findOne({where: {id: recipeId}});
-    return recipe;
-  }
-
-  async getAllRecipes(): Promise<Recipe[]> {
-    const recipes = await this.find();
-    return recipes;
+  constructor(
+    @InjectRepository(Recipe) manager: EntityManager,
+    @InjectRepository(Ingredient) private ingredientRepository: IngredientRepository,
+    @InjectRepository(Instruction) private instructionRepository: InstructionRepository,
+  ) {
+    super(Recipe, manager);
   }
 }
