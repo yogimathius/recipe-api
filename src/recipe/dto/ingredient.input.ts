@@ -25,6 +25,6 @@ export class IngredientInput {
     quantity: number;
 
     @Exclude()
-    @Field(type => NewRecipeInput)
+    @IsOptional()
     recipe: NewRecipeInput;
 }

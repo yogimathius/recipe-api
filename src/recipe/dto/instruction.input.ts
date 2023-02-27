@@ -20,6 +20,6 @@ export class InstructionInput {
     direction: string;
 
     @Exclude()
-    @Field(type => NewRecipeInput)
+    @IsOptional()
     recipe: NewRecipeInput;
 }
