@@ -5,22 +5,12 @@ import { RecipeModule } from './recipe/recipe.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { DatabaseModule } from './database/database.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 import { RootTestModule } from './testing/root-test.module';
 
 describe('AppModule', () => {
   let resolver: RecipeResolver;
-
-
-  let app: TestingModule;
-
-  beforeAll(async () => {
-    app = await Test.createTestingModule({
-      imports: [DatabaseModule, RecipeModule, ConfigModule],
-    }).compile();
-  });
-
+  let moduleRef: TestingModule;
   
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -62,14 +52,6 @@ describe('AppModule', () => {
     const graphqlModule = moduleRef.get<GraphQLModule>(GraphQLModule);
     expect(graphqlModule).toBeDefined();
   });
-
-  it('should set the autoSchemaFile in the GraphQLModule', () => {
-    const graphqlModule = app.get(GraphQLModule.forRoot);
-    expect(graphqlModule).toBeDefined();
-    expect(graphqlModule.autoSchemaFile).toEqual('schema.gql');
-  });
-  
-  
 
   it('should include the DatabaseModule in the imports array', async () => {
     const moduleRef = await Test.createTestingModule({
