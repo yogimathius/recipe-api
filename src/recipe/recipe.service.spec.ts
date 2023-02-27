@@ -82,6 +82,10 @@ describe('RecipesService', () => {
       const result = await service.findAll({ page: 1, limit: 10 });
 
       expect(repository.find).toHaveBeenCalledWith({
+        relations: {
+          ingredients: true,
+          instructions: true,
+        },
         take: 10,
         skip: 0,
       });
