@@ -47,7 +47,7 @@ describe('RecipesService', () => {
 
   describe('create', () => {
     it('should create and save a new recipe', async () => {
-      const newRecipe = { title: 'Recipe 1', description: 'Description 1', instructions: [instruction1], ingredients: [ingredient1] };
+      const newRecipe = { id: 1, title: 'Recipe 1', description: 'Description 1', instructions: [instruction1], ingredients: [ingredient1] };
       const expectedRecipe = { id: 1, ...newRecipe };
        jest.spyOn(repository, 'save').mockResolvedValue(expectedRecipe);
 

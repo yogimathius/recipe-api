@@ -120,6 +120,7 @@ describe('RecipeResolver', () => {
   describe('createRecipe', () => {
     it('should create a new recipe', async () => {
       const newRecipeData: NewRecipeInput = {
+        id: 1,
         title: 'New Recipe',
         description: 'A new recipe',
         ingredients: [ingredient1, ingredient2],
@@ -159,6 +160,7 @@ describe('RecipeResolver', () => {
     it('should delete a recipe', async () => {
       // Create a new recipe to delete
       const newRecipe: NewRecipeInput = {
+        id: 1,
         title: 'Test Recipe',
         description: 'This is a test recipe',
         ingredients: [ingredient1, ingredient2],

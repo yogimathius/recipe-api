@@ -5,7 +5,7 @@ import { Instruction } from './instruction.model';
 
 @ObjectType({ description: 'recipe ' })
 export class Recipe {
-  @Field(type => ID)
+  @Field(() => ID)
   id: number;
 
   @Directive('@upper')

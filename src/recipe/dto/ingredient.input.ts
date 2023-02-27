@@ -1,11 +1,12 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { Exclude } from 'class-transformer';
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
 import { NewRecipeInput } from './new-recipe.input';
 
 @InputType()
 export class IngredientInput {
     @Exclude()
+    @IsOptional()
     id: number;
     
     @IsNotEmpty()

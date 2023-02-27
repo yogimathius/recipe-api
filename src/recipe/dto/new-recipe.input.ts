@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsArray, IsOptional, Length, MaxLength, ValidateNested } from 'class-validator';
+import { ArrayNotEmpty, IsArray, IsOptional, Length, MaxLength, ValidateNested } from 'class-validator';
 import { Exclude, Type } from 'class-transformer';
 import { IngredientInput } from './ingredient.input';
 import { InstructionInput } from './instruction.input';
@@ -7,6 +7,7 @@ import { InstructionInput } from './instruction.input';
 @InputType()
 export class NewRecipeInput {
   @Exclude()
+  @IsOptional()
   id: number;
   
   @Field()
@@ -20,12 +21,14 @@ export class NewRecipeInput {
 
   @IsArray()
   @ValidateNested({ each: true })
+  @ArrayNotEmpty()
   @Type(() => InstructionInput)
   @Field(() => [InstructionInput])
   instructions: InstructionInput[];
 
   @IsArray()
   @ValidateNested({ each: true })
+  @ArrayNotEmpty()
   @Type(() => IngredientInput)
   @Field(() => [IngredientInput])
   ingredients: IngredientInput[];
