@@ -26,6 +26,10 @@ export class RecipesService {
     return this.recipeRepository.find({
       take: limit,
       skip: (page - 1) * limit,
+      relations: {
+        instructions: true,
+        ingredients: true,
+      },
     });
   }
 

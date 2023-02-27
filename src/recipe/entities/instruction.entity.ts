@@ -12,6 +12,6 @@ export class Instruction {
   @Column()
   direction: string;
 
-  @ManyToOne(() => Recipe, (recipe) => recipe.instructions)
+  @ManyToOne(() => Instruction, instruction => instruction.recipe)
   recipe: Recipe;
 }

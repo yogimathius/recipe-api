@@ -2,35 +2,61 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Ingredient {
+  id: ID!
+  name: String!
+  type: String!
+  quantity: Float!
+}
+
+type Instruction {
+  id: ID!
+  step: Float!
+  direction: String!
+}
+
 """recipe """
 type Recipe {
   id: ID!
   description: String
-  ingredients: [String!]!
-  instructions: [String!]!
+  ingredients: [Ingredient!]!
+  instructions: [Instruction!]!
 }
 
 type Query {
-  recipe(id: String!): Recipe!
+  recipe(id: Float!): Recipe!
   recipes(page: Int! = 1, limit: Int! = 10): [Recipe!]!
 }
 
 type Mutation {
   createRecipe(newRecipeData: NewRecipeInput!): Recipe!
-  updateRecipe(id: String!, updateRecipeInput: UpdateRecipeInput!): Recipe!
-  deleteRecipe(id: String!): Boolean!
+  updateRecipe(id: Float!, updateRecipeInput: UpdateRecipeInput!): Recipe!
+  deleteRecipe(id: Float!): Boolean!
 }
 
 input NewRecipeInput {
   title: String!
   description: String
-  ingredients: [String!]!
-  instructions: [String!]!
+  instructions: [InstructionInput!]!
+  ingredients: [IngredientInput!]!
+}
+
+input InstructionInput {
+  step: Float!
+  direction: String!
+  recipe: NewRecipeInput!
+}
+
+input IngredientInput {
+  name: String!
+  type: String!
+  quantity: Float!
+  recipe: NewRecipeInput!
 }
 
 input UpdateRecipeInput {
-  id: String!
+  id: Float!
   description: String
-  ingredients: [String!]!
-  instructions: [String!]!
+  instructions: [InstructionInput!]!
+  ingredients: [IngredientInput!]!
 }

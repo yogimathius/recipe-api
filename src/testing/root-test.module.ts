@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Recipe } from '../recipe/entities/recipe.entity';
 import { Ingredient } from '../recipe/entities/ingredient.entity';
 import { Instruction } from '../recipe/entities/instruction.entity';
@@ -12,16 +12,20 @@ import { InstructionRepository } from '../recipe/repositories/instruction.reposi
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST || 'localhost',
-      port: +process.env.DB_PORT || 5432,
-      username: process.env.DB_USERNAME || 'yogimathius',
-      password: process.env.DB_PASSWORD || 'password',
-      database: process.env.DB_NAME || 'recipe_api',
-      autoLoadEntities: true,
-      synchronize: true,
-    }),
+    TypeOrmModule.forRootAsync({
+        imports: [ConfigModule],
+        useFactory: async (configService: ConfigService) => ({
+          type: 'postgres',
+          host: 'localhost',
+          port: 5432,
+          username: 'yogimathius',
+          password: 'password',
+          database: 'recipe_api',
+          autoLoadEntities: true,
+          synchronize: true,
+        }),
+        inject: [ConfigService],
+      }),
     TypeOrmModule.forFeature([Recipe, Ingredient, Instruction]),
   ],
   providers: [

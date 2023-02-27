@@ -5,14 +5,25 @@ import { RecipeModule } from './recipe/recipe.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { DatabaseModule } from './database/database.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { RootTestModule } from './testing/root-test.module';
 
 describe('AppModule', () => {
   let resolver: RecipeResolver;
-  let moduleRef: TestingModule;
 
+
+  let app: TestingModule;
+
+  beforeAll(async () => {
+    app = await Test.createTestingModule({
+      imports: [DatabaseModule, RecipeModule, ConfigModule],
+    }).compile();
+  });
+
+  
   beforeEach(async () => {
-    moduleRef = await Test.createTestingModule({
+    const moduleRef = await Test.createTestingModule({
       imports: [
         GraphQLModule.forRootAsync<ApolloDriverConfig>({
           driver: ApolloDriver,
@@ -20,6 +31,7 @@ describe('AppModule', () => {
             autoSchemaFile: 'schema.gql',
           }),    
         }),
+        ConfigModule.forRoot(),
         RootTestModule,
         RecipeModule,
         DatabaseModule,
@@ -52,7 +64,7 @@ describe('AppModule', () => {
   });
 
   it('should set the autoSchemaFile in the GraphQLModule', () => {
-    const graphqlModule = moduleRef.get(GraphQLModule.forRootAsync);
+    const graphqlModule = app.get(GraphQLModule.forRoot);
     expect(graphqlModule).toBeDefined();
     expect(graphqlModule.autoSchemaFile).toEqual('schema.gql');
   });

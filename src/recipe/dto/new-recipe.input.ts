@@ -1,11 +1,14 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { ArrayNotEmpty, IsOptional, Length, MaxLength } from 'class-validator';
-import { OneToMany } from 'typeorm';
-import { Ingredient } from '../entities/ingredient.entity';
-import { Instruction } from '../entities/instruction.entity';
+import { IsArray, IsOptional, Length, MaxLength, ValidateNested } from 'class-validator';
+import { Exclude, Type } from 'class-transformer';
+import { IngredientInput } from './ingredient.input';
+import { InstructionInput } from './instruction.input';
 
 @InputType()
 export class NewRecipeInput {
+  @Exclude()
+  id: number;
+  
   @Field()
   @MaxLength(30)
   title: string;
@@ -15,13 +18,15 @@ export class NewRecipeInput {
   @Length(30, 255)
   description?: string;
 
-  @OneToMany(() => Ingredient, ingredient => ingredient, { cascade: true })
-  @Field(() => [Ingredient])
-  @ArrayNotEmpty()
-  ingredients: Ingredient[];
-  
-  @OneToMany(() => Instruction, ingredient => ingredient, { cascade: true })  
-  @Field(() => [Instruction])
-  @ArrayNotEmpty()
-  instructions: Instruction[];
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => InstructionInput)
+  @Field(() => [InstructionInput])
+  instructions: InstructionInput[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => IngredientInput)
+  @Field(() => [IngredientInput])
+  ingredients: IngredientInput[];
 }

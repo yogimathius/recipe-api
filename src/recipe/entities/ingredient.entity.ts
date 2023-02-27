@@ -15,6 +15,6 @@ export class Ingredient {
   @Column()
   quantity: number;
 
-  @ManyToOne(() => Recipe, recipe => recipe.ingredients)
+  @ManyToOne(() => Ingredient, Ingredient => Ingredient.recipe)
   recipe: Recipe;
 }
